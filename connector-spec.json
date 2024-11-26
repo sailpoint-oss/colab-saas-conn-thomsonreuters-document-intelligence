@@ -1,0 +1,175 @@
+{
+	"name": "colab-saas-conn-thomsonreuters-document-intelligence",
+	"commands": [
+        "std:account:create",
+        "std:account:enable",
+        "std:account:disable",
+        "std:account:list",
+        "std:account:read",
+        "std:account:update",
+        "std:entitlement:list",
+        "std:test-connection"
+    ],
+	"sourceConfig": [
+		{
+			"type": "menu",
+			"label": "Configuration",
+			"items": [
+				{
+					"type": "section",
+					"sectionTitle": "Authentication",
+					"sectionHelpMessage": "Provide connection parameters to interact securely with the target application.",
+					"items": [
+						{
+							"key": "baseUrl",
+							"label": "Base URL",
+							"type": "text",
+							"required": true
+						},
+						{
+							"key": "clientId",
+							"label": "Client Id",
+							"type": "text",
+							"required": true
+						},
+						{
+							"key": "clientSecret",
+							"label": "Client Secret",
+							"type": "secret",
+							"required": true
+						},
+                        {
+                            "key": "ignoreSSL",
+                            "label": "Ignore SSL errors?",
+                            "type": "checkbox",
+                            "required": true
+                        }
+					]
+				}
+			]
+		}
+	],
+	"accountSchema":{
+		"displayAttribute": "name",
+		"identityAttribute": "id",
+        "groupAttribute": "groups",
+		"attributes":[
+			{
+				"name": "id",
+				"type": "string",
+				"description": "Internal Id of Account"
+			},
+			{
+				"name": "name",
+				"type": "string",
+				"description": "Display name of the account"
+			},
+			{
+				"name": "email",
+				"type": "string",
+				"description": "Email of the account"
+			},
+            {
+				"name": "status",
+				"type": "string",
+				"description": "Account status"
+			},
+            {
+                "name": "groups",
+                "type": "string",
+                "description": "Groups a user belongs to",
+                "entitlement": true,
+                "managed": true,
+                "multi": true
+            }
+		]
+	},
+	"entitlementSchemas": [
+        {
+            "type": "group",
+            "identityAttribute": "id",
+            "displayAttribute": "name",
+            "attributes": [
+                {
+                    "name": "id",
+                    "type": "string",
+                    "description": ""
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "description": ""
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "description": ""
+                }
+            ]
+        }
+    ],
+	"accountCreateTemplate": {
+		"fields": [
+			{
+                "key": "name",
+                "label": "name",
+                "type": "string",
+                "required": true,
+                "initialValue": {
+                    "type": "identityAttribute",
+                    "attributes": {
+                        "name": "displayName"
+                    }
+                }
+            },
+			{
+                "key": "email",
+                "label": "email",
+                "type": "string",
+                "required": true,
+                "initialValue": {
+                    "type": "identityAttribute",
+                    "attributes": {
+                        "name": "email"
+                    }
+                }
+            },
+			{
+                "key": "status",
+                "label": "status",
+                "type": "string",
+                "required": true,
+                "initialValue": {
+                    "type": "static",
+                    "attributes": {
+                        "value": "Active"
+                    }
+                }
+            },
+			{
+                "key": "role",
+                "label": "role",
+                "type": "string",
+                "required": true,
+                "initialValue": {
+                    "type": "static",
+                    "attributes": {
+                        "value": "User"
+                    }
+                }
+            },
+            {
+                "key": "isInternal",
+                "label": "isInternal",
+                "type": "boolean",
+                "required": true,
+                "initialValue": {
+                    "type": "static",
+                    "attributes": {
+                        "value": false
+                    }
+                }
+            }
+		]
+	}
+}
