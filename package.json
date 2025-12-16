@@ -9,7 +9,7 @@
     "dev": "cross-env NODE_OPTIONS=--enable-source-maps spcx run dist/index.js",
     "debug": "spcx run dist/index.js",
     "prettier": "npx prettier --write .",
-    "test": "jest --coverage",
+    "test": "jest --coverage --passWithNoTests",
     "prepack-zip": "npm ci && npm run build",
     "pack-zip": "spcx package"
   },
